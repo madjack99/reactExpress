@@ -2,8 +2,8 @@ const express = require('express');
 
 const app = express();
 
-app.get('/signup', (req, res) => {
-  res.json('signup page');
+app.get('/sign-up', (req, res) => {
+  res.json('sign-up page');
 });
 
 const PORT = 5000;
