@@ -21,7 +21,15 @@ function SignUp() {
       }}
       validationSchema={signUpSchema}
       onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
+        fetch('/sign-up', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        })
+          .then(res => res.json())
+          .then(data => console.log(data));
       }}
     >
       <Form className='sign-up-form'>
