@@ -1,46 +1,62 @@
 import React from 'react';
-import { useFormik } from 'formik';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 
 import signUpSchema from './sign-up-schema';
 
 function SignUp() {
-  const formik = useFormik({
-    initialValues: {
-      login: '',
-      password: '',
-    },
-    validationSchema: signUpSchema,
-    onSubmit: values => {
-      console.log(values);
-    },
-  });
-
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <label htmlFor='login'>Login</label>
-      <input
-        type='text'
-        id='login'
-        name='login'
-        onChange={formik.handleChange}
-        value={formik.values.login}
-      />
-      {formik.touched.login && formik.errors.login ? (
-        <div>{formik.errors.login}</div>
-      ) : null}
-      <br />
-      <label htmlFor='password'>Password</label>
-      <input
-        type='text'
-        id='password'
-        name='password'
-        onChange={formik.handleChange}
-        value={formik.values.password}
-      />
-      <br />
-      <button>Submit</button>
-    </form>
+    <Formik
+      initialValues={{ login: '', password: '' }}
+      validationSchema={signUpSchema}
+      onSubmit={(values, { setSubmitting }) => {
+        console.log(values);
+      }}
+    >
+      <Form className='sign-up-form'>
+        <label htmlFor='login'>Login</label>
+        <Field id='login' name='login' />
+        <ErrorMessage name='login' />
+        <label htmlFor='password'>Password</label>
+        <Field id='password' name='password' type='password' />
+        <ErrorMessage name='password' />
+        <button type='submit'>Submit</button>
+      </Form>
+    </Formik>
   );
+
+  // const formik = useFormik({
+  //   initialValues: {
+  //     login: '',
+  //     password: '',
+  //   },
+  //   validationSchema: signUpSchema,
+  //   onSubmit: values => {
+  //     console.log(values);
+  //   },
+  // });
+
+  // return (
+  //   <form onSubmit={formik.handleSubmit}>
+  //     <label htmlFor='login'>Login</label>
+  //     <input name='login' id='login' {...formik.getFieldProps('login')} />
+  //     {formik.touched.login && formik.errors.login ? (
+  //       <div>{formik.errors.login}</div>
+  //     ) : null}
+  //     <br />
+  //     <label htmlFor='password'>Password</label>
+  //     <input
+  //       type='password'
+  //       id='password'
+  //       name='password'
+  //       {...formik.getFieldProps('password')}
+  //     />
+  //     {formik.touched.password && formik.errors.password ? (
+  //       <div>{formik.errors.password}</div>
+  //     ) : null}
+  //     <br />
+  //     <button type='submit'>Submit</button>
+  //   </form>
+  // );
 }
 
 export default SignUp;
