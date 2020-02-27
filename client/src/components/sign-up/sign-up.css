@@ -1,0 +1,26 @@
+label {
+  font-weight: bold;
+  margin: 5px;
+}
+
+button {
+  margin-top: 5px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background: skyblue;
+}
+
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  margin: auto;
+  padding: 20px;
+  border: 2px solid black;
+  border-radius: 8px;
+}
+
+.error-message {
+  color: red;
+}
