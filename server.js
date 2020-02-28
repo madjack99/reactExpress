@@ -9,17 +9,20 @@ app.use(cors());
 
 const jsonParser = bodyParser.json();
 
-fs.readFile('./users.xml', (err, data) => {
-  const json = JSON.parse(parser.toJson(data, { reversible: true }));
-  console.log(json);
-});
+const fetchDataBase = () => {
+  return fs.promises
+    .readFile('./users.xml')
+    .then(data => JSON.parse(parser.toJson(data, { reversible: true })))
+    .then(dataBase => dataBase.users);
+};
 
 app.get('/sign-up', (req, res) => {
   res.json('sign-up page');
 });
 
-app.post('/sign-up', jsonParser, (req, res) => {
-  console.log(typeof req.body);
+app.post('/sign-up', jsonParser, async (req, res) => {
+  const { userList } = await fetchDataBase();
+  console.log(userList);
   res.json('sign-up page');
 });
 
