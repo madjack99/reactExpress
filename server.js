@@ -22,8 +22,21 @@ app.get('/sign-up', (req, res) => {
 
 app.post('/sign-up', jsonParser, async (req, res) => {
   const { userList } = await fetchDataBase();
-  console.log(userList);
-  res.json('sign-up page');
+  const { login: newLogin, email: newEmail, password, name } = req.body;
+
+  let error = false;
+
+  for (user of userList) {
+    if (user.login === newLogin) {
+      res.status(200).json('login already exists');
+      error = true;
+    } else if (user.email === newEmail) {
+      res.status(200).json('email already exists');
+      error = true;
+    }
+  }
+
+  if (!error) res.json('final result');
 });
 
 const PORT = 5000;

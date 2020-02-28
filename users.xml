@@ -1,5 +1,5 @@
 <?xml version = "1.0"?>
 <users>	
    <userList id="1" login="manisha" password="abcd" email="man@google.com" name="manisha" />
-   <userList id="1" login="manisha" password="abcd" email="man@google.com" name="manisha" />
+   <userList id="1" login="manishak" password="abcd" email="maan@google.com" name="manisha" />
 </users>
