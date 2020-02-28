@@ -12,8 +12,7 @@ const jsonParser = bodyParser.json();
 const fetchDataBase = () => {
   return fs.promises
     .readFile('./users.xml')
-    .then(data => JSON.parse(parser.toJson(data, { reversible: true })))
-    .then(dataBase => dataBase.users);
+    .then(data => JSON.parse(parser.toJson(data, { reversible: true })));
 };
 
 app.get('/sign-up', (req, res) => {
@@ -21,7 +20,9 @@ app.get('/sign-up', (req, res) => {
 });
 
 app.post('/sign-up', jsonParser, async (req, res) => {
-  const { userList } = await fetchDataBase();
+  const database = await fetchDataBase();
+  console.log(database.users);
+  const { userList } = database.users;
   const { login: newLogin, email: newEmail, password, name } = req.body;
 
   let error = false;
@@ -34,6 +35,24 @@ app.post('/sign-up', jsonParser, async (req, res) => {
       res.status(200).json('email already exists');
       error = true;
     }
+  }
+
+  if (!error) {
+    const newUser = {
+      name,
+      password,
+      login: newLogin,
+      email: newEmail,
+    };
+
+    userList.push(newUser);
+    const stringified = JSON.stringify(database);
+    const xml = parser.toXml(stringified);
+
+    fs.promises
+      .writeFile('./users.xml', xml)
+      .then(data => console.log('wrote'))
+      .catch(err => console.log(err));
   }
 
   if (!error) res.json('final result');
