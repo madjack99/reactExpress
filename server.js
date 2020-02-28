@@ -29,10 +29,10 @@ app.post('/sign-up', jsonParser, async (req, res) => {
 
   for (user of userList) {
     if (user.login === newLogin) {
-      res.status(200).json('login already exists');
+      res.status(200).json({ message: 'Login already exists', error: true });
       error = true;
     } else if (user.email === newEmail) {
-      res.status(200).json('email already exists');
+      res.status(200).json({ message: 'Email already exists', error: true });
       error = true;
     }
   }
@@ -55,7 +55,8 @@ app.post('/sign-up', jsonParser, async (req, res) => {
       .catch(err => console.log(err));
   }
 
-  if (!error) res.json('final result');
+  if (!error)
+    res.status(200).json({ message: 'New user added to DB', error: false });
 });
 
 const PORT = 5000;
