@@ -65,7 +65,9 @@ app.post('/sign-up', jsonParser, async (req, res) => {
   }
 
   if (!error)
-    res.status(200).json({ message: 'New user added to DB', error: false });
+    res
+      .status(200)
+      .json({ name, message: 'New user added to DB', error: false });
 });
 
 const PORT = 5000;

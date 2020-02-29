@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Home() {
+function Home({ loggedUser }) {
   return (
     <div>
       <h1>Home</h1>
+      <h2>{loggedUser && <span>{`Hi, ${loggedUser}`}</span>}</h2>
       <ul>
         <li>
           <Link to='/sign-up'>Sign up</Link>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import SignUp from '../sign-up';
@@ -8,11 +8,17 @@ import LogIn from '../log-in';
 import './app.css';
 
 function App() {
+  const [loggedUser, setLoggedUser] = useState(null);
+
   return (
     <Router>
       <div className='App'>
-        <Route path='/' component={Home} exact />
-        <Route path='/sign-up' component={SignUp} exact />
+        <Route path='/' exact>
+          <Home loggedUser={loggedUser} />
+        </Route>
+        <Route path='/sign-up' exact>
+          <SignUp setLoggedUser={setLoggedUser} />
+        </Route>
         <Route path='/log-in' component={LogIn} exact />
       </div>
     </Router>

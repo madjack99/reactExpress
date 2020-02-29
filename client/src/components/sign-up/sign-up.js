@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import signUpSchema from './sign-up-schema';
 
 import './sign-up.css';
 
-function SignUp(props) {
-  console.log(props);
+function SignUp({ history, setLoggedUser }) {
   const [serverInfo, setServerInfo] = useState(null);
 
   const processServerInfo = serverInfo => {
@@ -46,7 +45,8 @@ function SignUp(props) {
               setServerInfo(data);
               setSubmitting(false);
               if (!data.error) {
-                props.history.push('/');
+                history.push('/');
+                setLoggedUser(data.name);
               }
             });
         }}
@@ -81,4 +81,4 @@ function SignUp(props) {
   );
 }
 
-export default SignUp;
+export default withRouter(SignUp);

@@ -1,4 +1,1 @@
-<users>
-  <userList id="1" login="manisha" password="abcd" email="man@google.com" name="manisha"></userList>
-  <userList id="2" login="manishad" password="abcdd" email="mand@google.com" name="manishad"></userList>
-</users>
+<users><userList id="1" login="manisha" password="abcd" email="man@google.com" name="manisha"></userList><userList id="2" login="manishad" password="abcdd" email="mand@google.com" name="manishad"></userList><userList name="Jerimiah" password="$2a$10$GW4im6yIV4h7KzT4BnfwxO6OXPWs5Hmo07VAJjsrhs7S3crir4j.C" login="alex" email="alex@gmail.com"></userList><userList name="alex" password="$2a$10$6YnVD23j7KtIo0Z/M3gHBOpvNIo/.BRW4UdUFRml5Dss6drRlKdJO" login="adsfs" email="aleax@gmail.com"></userList></users>
