@@ -1,5 +1,4 @@
 <users>
   <userList id="1" login="manisha" password="abcd" email="man@google.com" name="manisha"></userList>
   <userList id="2" login="manishad" password="abcdd" email="mand@google.com" name="manishad"></userList>
-  <userList name="alex" password="$2a$10$Nfe8NHuWb.Rb266wnzNs5.WFBzeAmckoICnbb1THUeXEY7H.3YFfi" login="adsfs" email="alex@gmail.com"></userList>
 </users>
