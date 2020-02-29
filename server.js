@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const parser = require('xml2json');
+const bcrypt = require('bcryptjs');
 
 const app = express();
 app.use(cors());
@@ -13,6 +14,12 @@ const fetchDataBase = () => {
   return fs.promises
     .readFile('./users.xml')
     .then(data => JSON.parse(parser.toJson(data, { reversible: true })));
+};
+
+const hashPassword = async password => {
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  return hashedPassword;
 };
 
 app.get('/sign-up', (req, res) => {
@@ -37,10 +44,12 @@ app.post('/sign-up', jsonParser, async (req, res) => {
     }
   }
 
+  const hashedPassword = await hashPassword(password);
+
   if (!error) {
     const newUser = {
       name,
-      password,
+      password: hashedPassword,
       login: newLogin,
       email: newEmail,
     };
