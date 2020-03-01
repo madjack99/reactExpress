@@ -8,7 +8,6 @@ function Home({ loggedUser, history, setLoggedUser }) {
     })
       .then(res => res.json())
       .then(data => {
-        console.log('log out front');
         history.push('/');
         setLoggedUser(null);
       });
