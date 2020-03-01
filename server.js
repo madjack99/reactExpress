@@ -88,8 +88,20 @@ app.post('/sign-up', jsonParser, async (req, res) => {
       .json({ name, message: 'New user added to DB', error: false });
 });
 
-app.get('/log-in', (req, res) => {
-  console.log('login', req.session.id);
+app.post('/log-in', jsonParser, async (req, res) => {
+  const database = await fetchDataBase();
+  const { userList } = database.users;
+  const { login: attemptLogin, password: attemptPassword } = req.body;
+
+  const user = userList.find(item => {
+    return item.login === attemptLogin && item.password === attemptPassword;
+  });
+
+  if (!user) {
+    res.status(200).json({ message: 'Wrong credentials', error: true });
+  } else {
+    res.status(200).json({ message: 'User logged in', error: false });
+  }
 });
 
 const PORT = 5000;
