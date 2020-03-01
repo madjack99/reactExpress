@@ -2,12 +2,13 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
 function Home({ loggedUser, history, setLoggedUser }) {
-  const handleLogOut = e => {
+  const handleLogOut = () => {
     fetch('/log-out', {
       method: 'POST',
     })
       .then(res => res.json())
       .then(data => {
+        console.log('log out front');
         history.push('/');
         setLoggedUser(null);
       });

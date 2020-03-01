@@ -125,6 +125,16 @@ app.post('/log-in', jsonParser, async (req, res) => {
   }
 });
 
+app.post('/log-out', (req, res) => {
+  console.log('destroying session');
+  req.session.destroy(err => {
+    if (err) console.log(err);
+    res
+      .clearCookie('JSExpressAuth')
+      .json({ message: 'logged out', error: false });
+  });
+});
+
 const PORT = 5000;
 
 app.listen(PORT, () => `Server is running on port ${PORT}`);
