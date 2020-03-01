@@ -4,9 +4,24 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const parser = require('xml2json');
 const bcrypt = require('bcryptjs');
+const session = require('express-session');
+const { v4: uuidv4 } = require('uuid');
 
 const app = express();
+
 app.use(cors());
+app.use(
+  session({
+    name: 'JSExpressAuth',
+    resave: false,
+    saveUninitialized: false,
+    secret: 'secretSignatureString',
+    cookie: {
+      maxAge: 1000 * 60 * 60,
+      httpOnly: false,
+    },
+  })
+);
 
 const jsonParser = bodyParser.json();
 
@@ -28,7 +43,7 @@ app.get('/sign-up', (req, res) => {
 
 app.post('/sign-up', jsonParser, async (req, res) => {
   const database = await fetchDataBase();
-  console.log(database.users);
+  console.log('session', req.session);
   const { userList } = database.users;
   const { login: newLogin, email: newEmail, password, name } = req.body;
 
@@ -49,10 +64,14 @@ app.post('/sign-up', jsonParser, async (req, res) => {
   if (!error) {
     const newUser = {
       name,
+      id: uuidv4(),
       password: hashedPassword,
       login: newLogin,
       email: newEmail,
+      session: req.session,
     };
+
+    req.session.id = newUser.id;
 
     userList.push(newUser);
     const stringified = JSON.stringify(database);
