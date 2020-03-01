@@ -1,7 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
-function Home({ loggedUser }) {
+function Home({ loggedUser, history, setLoggedUser }) {
+  const handleLogOut = e => {
+    fetch('/log-out', {
+      method: 'POST',
+    })
+      .then(res => res.json())
+      .then(data => {
+        history.push('/');
+        setLoggedUser(null);
+      });
+  };
+
   return (
     <div>
       <h1>Header</h1>
@@ -26,8 +37,9 @@ function Home({ loggedUser }) {
           <Link to='/'>Home</Link>
         </li>
       </ul>
+      {loggedUser ? <button onClick={handleLogOut}>Log out</button> : null}
     </div>
   );
 }
 
-export default Home;
+export default withRouter(Home);

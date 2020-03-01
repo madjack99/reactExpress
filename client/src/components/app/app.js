@@ -14,7 +14,7 @@ function App() {
     <Router>
       <div className='App'>
         <Route path='/'>
-          <Home loggedUser={loggedUser} />
+          <Home loggedUser={loggedUser} setLoggedUser={setLoggedUser} />
         </Route>
         <Route path='/sign-up' exact>
           {loggedUser ? (
