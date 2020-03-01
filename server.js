@@ -43,7 +43,6 @@ app.get('/sign-up', (req, res) => {
 
 app.post('/sign-up', jsonParser, async (req, res) => {
   const database = await fetchDataBase();
-  console.log('session', req.session);
   const { userList } = database.users;
   const { login: newLogin, email: newEmail, password, name } = req.body;
 
@@ -79,7 +78,7 @@ app.post('/sign-up', jsonParser, async (req, res) => {
 
     fs.promises
       .writeFile('./users.xml', xml)
-      .then(data => console.log('wrote'))
+      .then(data => console.log('Wrote to DB'))
       .catch(err => console.log(err));
   }
 
@@ -87,6 +86,10 @@ app.post('/sign-up', jsonParser, async (req, res) => {
     res
       .status(200)
       .json({ name, message: 'New user added to DB', error: false });
+});
+
+app.get('/log-in', (req, res) => {
+  console.log('login', req.session.id);
 });
 
 const PORT = 5000;

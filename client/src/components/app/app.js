@@ -19,7 +19,9 @@ function App() {
         <Route path='/sign-up' exact>
           <SignUp setLoggedUser={setLoggedUser} />
         </Route>
-        <Route path='/log-in' component={LogIn} exact />
+        <Route path='/log-in' exact>
+          <LogIn setLoggedUser={setLoggedUser} />
+        </Route>
       </div>
     </Router>
   );
