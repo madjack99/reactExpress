@@ -37,6 +37,11 @@ const hashPassword = async password => {
   return hashedPassword;
 };
 
+const comparePasswords = async (password, hash) => {
+  const isMatch = await bcrypt.compare(password, hash);
+  return isMatch;
+};
+
 app.get('/sign-up', (req, res) => {
   res.json('sign-up page');
 });
@@ -94,7 +99,10 @@ app.post('/log-in', jsonParser, async (req, res) => {
   const { login: attemptLogin, password: attemptPassword } = req.body;
 
   const user = userList.find(item => {
-    return item.login === attemptLogin && item.password === attemptPassword;
+    return (
+      item.login === attemptLogin &&
+      comparePasswords(attemptPassword, item.password)
+    );
   });
 
   if (!user) {
