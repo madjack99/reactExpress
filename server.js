@@ -98,17 +98,30 @@ app.post('/log-in', jsonParser, async (req, res) => {
   const { userList } = database.users;
   const { login: attemptLogin, password: attemptPassword } = req.body;
 
-  const user = userList.find(item => {
-    return (
-      item.login === attemptLogin &&
-      comparePasswords(attemptPassword, item.password)
+  const asyncPasswordComparison = async (arr, asyncCompare) => {
+    const promises = arr.map(asyncCompare);
+    const results = await Promise.all(promises);
+    const index = results.findIndex(item => item);
+    return arr[index];
+  };
+
+  const user = await asyncPasswordComparison(userList, async item => {
+    const doesPasswordMatch = await comparePasswords(
+      attemptPassword,
+      item.password
     );
+    const doesLoginMatch = attemptLogin === item.login;
+    return doesPasswordMatch && doesLoginMatch;
   });
 
   if (!user) {
     res.status(200).json({ message: 'Wrong credentials', error: true });
   } else {
-    res.status(200).json({ message: 'User logged in', error: false });
+    req.session.id = user.id;
+
+    res
+      .status(200)
+      .json({ name: user.name, message: 'User logged in', error: false });
   }
 });
 
