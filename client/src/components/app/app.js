@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import SignUp from '../sign-up';
 import Home from '../home';
@@ -13,14 +13,22 @@ function App() {
   return (
     <Router>
       <div className='App'>
-        <Route path='/' exact>
+        <Route path='/'>
           <Home loggedUser={loggedUser} />
         </Route>
         <Route path='/sign-up' exact>
-          <SignUp setLoggedUser={setLoggedUser} />
+          {loggedUser ? (
+            <Redirect to='/' />
+          ) : (
+            <SignUp setLoggedUser={setLoggedUser} />
+          )}
         </Route>
         <Route path='/log-in' exact>
-          <LogIn setLoggedUser={setLoggedUser} />
+          {loggedUser ? (
+            <Redirect to='/' />
+          ) : (
+            <LogIn setLoggedUser={setLoggedUser} />
+          )}
         </Route>
       </div>
     </Router>
